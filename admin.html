@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Ali Haider Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10131a; --panel:#171b24; --panel-2:#1e2330; --line:#2a3040;
+    --amber:#e3a548; --cyan:#5fe1c9; --text:#edeef2; --muted:#8b93a6; --muted-2:#5c6478;
+    --red:#e07a7a;
+    --display:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ background:var(--ink); color:var(--text); font-family:var(--body); line-height:1.6; padding:40px 24px 100px; }
+  .wrap{ max-width:880px; margin:0 auto; }
+  h1{ font-family:var(--display); font-size:1.8rem; margin-bottom:6px; }
+  .sub{ color:var(--muted); font-size:14px; margin-bottom:32px; }
+  .banner{
+    background:var(--panel); border:1px solid var(--amber); border-left:3px solid var(--amber);
+    border-radius:6px; padding:16px 18px; font-size:13.5px; color:var(--muted); margin-bottom:32px;
+  }
+  .banner strong{ color:var(--amber); }
+  fieldset{ border:1px solid var(--line); border-radius:8px; padding:22px; margin-bottom:28px; }
+  legend{ font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--amber); padding:0 8px; }
+  label{ font-family:var(--mono); font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:6px; }
+  input, select, textarea{
+    width:100%; background:var(--panel-2); border:1px solid var(--line); border-radius:5px; color:var(--text);
+    font-family:var(--body); font-size:14.5px; padding:10px 12px; margin-bottom:16px;
+  }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--amber); }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:600px){ .row2{grid-template-columns:1fr;} }
+  .checkline{ display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .checkline input{ width:auto; margin:0; }
+  .checkline label{ margin:0; text-transform:none; font-size:13px; }
+  button{
+    font-family:var(--mono); font-size:13px; padding:11px 20px; border-radius:5px; border:1px solid transparent;
+    cursor:pointer; background:var(--amber); color:#10131a; font-weight:600;
+  }
+  button.ghost{ background:transparent; border-color:var(--line); color:var(--text); }
+  button.danger{ background:transparent; border-color:var(--red); color:var(--red); }
+  button:disabled{ opacity:0.5; cursor:not-allowed; }
+  .status{ font-family:var(--mono); font-size:12.5px; margin-top:10px; min-height:16px; }
+  .list-item{
+    background:var(--panel); border:1px solid var(--line); border-radius:7px; padding:14px 16px;
+    display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:10px;
+  }
+  .list-item .meta{ font-size:13.5px; }
+  .list-item .meta small{ display:block; color:var(--muted); font-family:var(--mono); font-size:11px; margin-top:3px; }
+  .hidden{ display:none; }
+  .lock-screen{ max-width:380px; margin:120px auto 0; text-align:center; }
+  .lock-screen input{ text-align:center; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ===== LOCK SCREEN ===== -->
+  <div id="lockScreen" class="lock-screen">
+    <h1 style="margin-bottom:20px;">Admin Access</h1>
+    <input type="password" id="passphrase" placeholder="Passphrase">
+    <button id="unlockBtn" style="width:100%;">Unlock</button>
+    <p class="status" id="lockStatus"></p>
+    <p style="color:var(--muted-2); font-family:var(--mono); font-size:11.5px; margin-top:24px;">
+      This page isn't linked anywhere on the public site. The real access control is your GitHub token in the next step — this passphrase only stops casual snooping.
+    </p>
+  </div>
+
+  <!-- ===== ADMIN PANEL (shown after passphrase) ===== -->
+  <div id="panel" class="hidden">
+    <h1>Portfolio Admin</h1>
+    <p class="sub">Add projects and skills. Changes commit directly to your GitHub repo, so everyone who visits your site sees them.</p>
+
+    <div class="banner">
+      <strong>How access actually works:</strong> anyone who guesses this URL still can't change anything without your GitHub token below. Use a <strong>fine-grained personal access token</strong> scoped only to this one repo with "Contents: Read and write" permission — nothing else. Never paste a token that has access to other repos. Don't commit your token into the repo itself.
+    </div>
+
+    <fieldset>
+      <legend>Repo connection</legend>
+      <div class="row2">
+        <div>
+          <label for="ghUser">GitHub username</label>
+          <input id="ghUser" placeholder="alihaider">
+        </div>
+        <div>
+          <label for="ghRepo">Repository name</label>
+          <input id="ghRepo" placeholder="portfolio">
+        </div>
+      </div>
+      <div class="row2">
+        <div>
+          <label for="ghBranch">Branch</label>
+          <input id="ghBranch" value="main">
+        </div>
+        <div>
+          <label for="ghToken">Personal access token</label>
+          <input id="ghToken" type="password" placeholder="github_pat_...">
+        </div>
+      </div>
+      <div class="checkline">
+        <input type="checkbox" id="rememberMe">
+        <label for="rememberMe">Remember these on this device only (stored in this browser, never sent anywhere but GitHub)</label>
+      </div>
+      <button id="loadBtn">Load current data</button>
+      <p class="status" id="connStatus"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Add a project</legend>
+      <div class="row2">
+        <div><label>Title</label><input id="pTitle"></div>
+        <div><label>Category</label><input id="pCategory" placeholder="AI / Cloud / Databases / Networking / Algorithms / Architecture / OpenAI"></div>
+      </div>
+      <label>Tags (comma separated)</label>
+      <input id="pTags" placeholder="React, FastAPI, AI">
+      <label>Description</label>
+      <textarea id="pDesc" rows="4"></textarea>
+      <div class="row2">
+        <div><label>GitHub link</label><input id="pGithub" placeholder="https://github.com/..."></div>
+        <div><label>Live demo link (optional)</label><input id="pDemo" placeholder="https://..."></div>
+      </div>
+      <button id="addProjectBtn">Add project</button>
+      <p class="status" id="projectStatus"></p>
+      <div id="projectList" style="margin-top:20px;"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Add a skill</legend>
+      <div class="row2">
+        <div><label>Category (existing or new)</label><input id="sCategory" placeholder="e.g. Cloud"></div>
+        <div><label>Skill name</label><input id="sItem" placeholder="e.g. kubernetes"></div>
+      </div>
+      <button id="addSkillBtn">Add skill</button>
+      <p class="status" id="skillStatus"></p>
+      <div id="skillList" style="margin-top:20px;"></div>
+    </fieldset>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const PASSPHRASE_KEY = 'admin_unlocked';
+  const lockScreen = document.getElementById('lockScreen');
+  const panel = document.getElementById('panel');
+
+  // ---- lock screen (deterrent only, not real security) ----
+  document.getElementById('unlockBtn').addEventListener('click', () => {
+    const val = document.getElementById('passphrase').value;
+    // Change this passphrase before you deploy.
+    if(val === 'letmein-change-this'){
+      lockScreen.classList.add('hidden');
+      panel.classList.remove('hidden');
+      restoreSaved();
+    } else {
+      document.getElementById('lockStatus').style.color = 'var(--red)';
+      document.getElementById('lockStatus').textContent = 'Incorrect passphrase.';
+    }
+  });
+
+  function restoreSaved(){
+    const saved = JSON.parse(localStorage.getItem('portfolio_admin_creds') || 'null');
+    if(saved){
+      document.getElementById('ghUser').value = saved.user || '';
+      document.getElementById('ghRepo').value = saved.repo || '';
+      document.getElementById('ghBranch').value = saved.branch || 'main';
+      document.getElementById('rememberMe').checked = true;
+    }
+  }
+
+  let projectsSha = null, skillsSha = null;
+  let projectsData = [], skillsData = [];
+
+  function cfg(){
+    return {
+      user: document.getElementById('ghUser').value.trim(),
+      repo: document.getElementById('ghRepo').value.trim(),
+      branch: document.getElementById('ghBranch').value.trim() || 'main',
+      token: document.getElementById('ghToken').value.trim()
+    };
+  }
+
+  async function ghGet(path){
+    const c = cfg();
+    const res = await fetch(`https://api.github.com/repos/${c.user}/${c.repo}/contents/${path}?ref=${c.branch}`, {
+      headers: { Authorization: `Bearer ${c.token}`, Accept: 'application/vnd.github+json' }
+    });
+    if(!res.ok) throw new Error(`Couldn't load ${path} (${res.status})`);
+    const json = await res.json();
+    const content = JSON.parse(decodeURIComponent(escape(atob(json.content))));
+    return { content, sha: json.sha };
+  }
+
+  async function ghPut(path, dataObj, sha, message){
+    const c = cfg();
+    const body = {
+      message,
+      branch: c.branch,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(dataObj, null, 2)))),
+      sha
+    };
+    const res = await fetch(`https://api.github.com/repos/${c.user}/${c.repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${c.token}`, Accept: 'application/vnd.github+json' },
+      body: JSON.stringify(body)
+    });
+    if(!res.ok){
+      const errText = await res.text();
+      throw new Error(`Commit failed (${res.status}): ${errText.slice(0,200)}`);
+    }
+    return res.json();
+  }
+
+  document.getElementById('loadBtn').addEventListener('click', async () => {
+    const statusEl = document.getElementById('connStatus');
+    statusEl.style.color = 'var(--cyan)';
+    statusEl.textContent = 'Loading…';
+    if(document.getElementById('rememberMe').checked){
+      const c = cfg();
+      localStorage.setItem('portfolio_admin_creds', JSON.stringify({ user:c.user, repo:c.repo, branch:c.branch }));
+    } else {
+      localStorage.removeItem('portfolio_admin_creds');
+    }
+    try{
+      const p = await ghGet('data/projects.json');
+      const s = await ghGet('data/skills.json');
+      projectsData = p.content; projectsSha = p.sha;
+      skillsData = s.content; skillsSha = s.sha;
+      renderProjectList();
+      renderSkillList();
+      statusEl.style.color = 'var(--cyan)';
+      statusEl.textContent = `Connected. ${projectsData.length} projects, ${skillsData.length} skill groups loaded.`;
+    } catch(err){
+      statusEl.style.color = 'var(--red)';
+      statusEl.textContent = err.message;
+    }
+  });
+
+  function renderProjectList(){
+    const el = document.getElementById('projectList');
+    if(!projectsData.length){ el.innerHTML = '<p style="color:var(--muted-2); font-size:13px;">No projects loaded yet.</p>'; return; }
+    el.innerHTML = projectsData.map((p, i) => `
+      <div class="list-item">
+        <div class="meta">${p.title}<small>${p.category || ''}</small></div>
+        <button class="danger" data-idx="${i}" data-type="project">Delete</button>
+      </div>`).join('');
+    el.querySelectorAll('button[data-type="project"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteProject(parseInt(btn.dataset.idx)));
+    });
+  }
+
+  function renderSkillList(){
+    const el = document.getElementById('skillList');
+    if(!skillsData.length){ el.innerHTML = '<p style="color:var(--muted-2); font-size:13px;">No skill groups loaded yet.</p>'; return; }
+    el.innerHTML = skillsData.map((g, gi) => `
+      <div class="list-item" style="align-items:flex-start; flex-direction:column;">
+        <div class="meta" style="margin-bottom:8px;"><strong>${g.category}</strong></div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          ${(g.items||[]).map((it, ii) => `<span style="font-family:var(--mono); font-size:12px; background:var(--panel-2); border:1px solid var(--line); border-radius:4px; padding:5px 9px; display:flex; align-items:center; gap:6px;">${it} <button class="danger" style="padding:2px 6px; font-size:10px;" data-gi="${gi}" data-ii="${ii}" data-type="skill">×</button></span>`).join('')}
+        </div>
+      </div>`).join('');
+    el.querySelectorAll('button[data-type="skill"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteSkillItem(parseInt(btn.dataset.gi), parseInt(btn.dataset.ii)));
+    });
+  }
+
+  document.getElementById('addProjectBtn').addEventListener('click', async () => {
+    const statusEl = document.getElementById('projectStatus');
+    const title = document.getElementById('pTitle').value.trim();
+    const category = document.getElementById('pCategory').value.trim();
+    const tags = document.getElementById('pTags').value.split(',').map(t => t.trim()).filter(Boolean);
+    const description = document.getElementById('pDesc').value.trim();
+    const github = document.getElementById('pGithub').value.trim();
+    const demo = document.getElementById('pDemo').value.trim();
+    if(!title || !category){ statusEl.style.color='var(--red)'; statusEl.textContent = 'Title and category are required.'; return; }
+    if(projectsSha === null){ statusEl.style.color='var(--red)'; statusEl.textContent = 'Load current data first.'; return; }
+
+    const newProject = { id: title.toLowerCase().replace(/[^a-z0-9]+/g,'-'), title, category, tags, description, github, demo };
+    const updated = [...projectsData, newProject];
+    statusEl.style.color = 'var(--cyan)'; statusEl.textContent = 'Committing…';
+    try{
+      const result = await ghPut('data/projects.json', updated, projectsSha, `Add project: ${title}`);
+      projectsData = updated;
+      projectsSha = result.content.sha;
+      renderProjectList();
+      statusEl.textContent = 'Added — live on your site within a minute or two.';
+      ['pTitle','pCategory','pTags','pDesc','pGithub','pDemo'].forEach(id => document.getElementById(id).value = '');
+    } catch(err){
+      statusEl.style.color = 'var(--red)'; statusEl.textContent = err.message;
+    }
+  });
+
+  async function deleteProject(idx){
+    const statusEl = document.getElementById('projectStatus');
+    const updated = projectsData.filter((_, i) => i !== idx);
+    statusEl.style.color = 'var(--cyan)'; statusEl.textContent = 'Removing…';
+    try{
+      const result = await ghPut('data/projects.json', updated, projectsSha, `Remove project: ${projectsData[idx].title}`);
+      projectsData = updated;
+      projectsSha = result.content.sha;
+      renderProjectList();
+      statusEl.textContent = 'Removed.';
+    } catch(err){
+      statusEl.style.color = 'var(--red)'; statusEl.textContent = err.message;
+    }
+  }
+
+  document.getElementById('addSkillBtn').addEventListener('click', async () => {
+    const statusEl = document.getElementById('skillStatus');
+    const category = document.getElementById('sCategory').value.trim();
+    const item = document.getElementById('sItem').value.trim();
+    if(!category || !item){ statusEl.style.color='var(--red)'; statusEl.textContent = 'Category and skill name are required.'; return; }
+    if(skillsSha === null){ statusEl.style.color='var(--red)'; statusEl.textContent = 'Load current data first.'; return; }
+
+    const updated = JSON.parse(JSON.stringify(skillsData));
+    const existing = updated.find(g => g.category.toLowerCase() === category.toLowerCase());
+    if(existing){ existing.items.push(item); } else { updated.push({ category, items: [item] }); }
+
+    statusEl.style.color = 'var(--cyan)'; statusEl.textContent = 'Committing…';
+    try{
+      const result = await ghPut('data/skills.json', updated, skillsSha, `Add skill: ${item} (${category})`);
+      skillsData = updated;
+      skillsSha = result.content.sha;
+      renderSkillList();
+      statusEl.textContent = 'Added — live on your site within a minute or two.';
+      document.getElementById('sCategory').value = '';
+      document.getElementById('sItem').value = '';
+    } catch(err){
+      statusEl.style.color = 'var(--red)'; statusEl.textContent = err.message;
+    }
+  });
+
+  async function deleteSkillItem(gi, ii){
+    const statusEl = document.getElementById('skillStatus');
+    const updated = JSON.parse(JSON.stringify(skillsData));
+    updated[gi].items.splice(ii, 1);
+    const cleaned = updated.filter(g => g.items.length > 0);
+    statusEl.style.color = 'var(--cyan)'; statusEl.textContent = 'Removing…';
+    try{
+      const result = await ghPut('data/skills.json', cleaned, skillsSha, `Remove a skill item`);
+      skillsData = cleaned;
+      skillsSha = result.content.sha;
+      renderSkillList();
+      statusEl.textContent = 'Removed.';
+    } catch(err){
+      statusEl.style.color = 'var(--red)'; statusEl.textContent = err.message;
+    }
+  }
+})();
+</script>
+</body>
+</html>
