@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ai-ids",
+    "title": "AI Intrusion Detection System",
+    "category": "AI",
+    "tags": ["AI", "ML", "React", "FastAPI", "Cybersecurity"],
+    "description": "Built a real-time intrusion detection system using Random Forest and Scapy to detect malicious traffic. Integrated FastAPI, WebSockets, and a React SOC dashboard for live monitoring with automated firewall responses. The model achieved approximately 89.8% classification accuracy on the UNSW-NB15 dataset.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "crypto-exchange",
+    "title": "Enterprise Cryptocurrency Exchange",
+    "category": "Databases",
+    "tags": ["Oracle", "MongoDB", "Node", "React"],
+    "description": "Developed a hybrid database cryptocurrency exchange featuring Oracle transactional storage, MongoDB analytics, stored procedures, triggers, ACID transactions, and an automated order-matching engine with price-time priority.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "cloud-native-todo",
+    "title": "Cloud Native Todo",
+    "category": "Cloud",
+    "tags": ["Azure", "Docker", "React", "TypeScript"],
+    "description": "Designed and deployed a containerized full-stack Todo application on Microsoft Azure using Azure App Service, Azure Static Web Apps, Docker, Azure DevOps, and GitHub Actions for automated CI/CD.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "bookmind-ai",
+    "title": "BookMind AI",
+    "category": "OpenAI",
+    "tags": ["OpenAI", "LLM", "React", "TypeScript", "tRPC"],
+    "description": "Built an AI-powered personalized book recommendation platform using OpenAI, tRPC, TypeScript, structured JSON outputs, and intelligent reader profiling to generate personalized reading recommendations.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "voice-translator",
+    "title": "Real-Time Voice Translator",
+    "category": "AI",
+    "tags": ["AI", "WebRTC", "Speech", "Translation"],
+    "description": "Engineered a multilingual voice communication platform combining speech recognition, translation, text-to-speech, and WebRTC to enable low-latency multilingual conversations.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "tournament-tree",
+    "title": "Tournament Tree Visualizer",
+    "category": "Algorithms",
+    "tags": ["Algorithms", "Visualization", "JavaScript"],
+    "description": "Created an interactive visualization of the Tournament Tree Sort algorithm with step-by-step animations, time-complexity analysis, and educational controls demonstrating an O(n log n) sorting process.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "riscv-processor",
+    "title": "RISC-V Processor",
+    "category": "Architecture",
+    "tags": ["Computer Architecture", "Verilog"],
+    "description": "Implemented a 5-stage pipelined RISC-V processor with forwarding logic, hazard detection, and branch handling to improve instruction throughput while maintaining execution correctness.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  },
+  {
+    "id": "network-infra",
+    "title": "Network Infrastructure",
+    "category": "Networking",
+    "tags": ["Cisco", "Networking", "QoS"],
+    "description": "Designed a scalable online learning network with VLAN segmentation, DNS-based load balancing, QoS for live video, redundancy, and router-on-a-stick architecture using Cisco Packet Tracer.",
+    "github": "https://github.com/alihaider",
+    "demo": ""
+  }
+]
